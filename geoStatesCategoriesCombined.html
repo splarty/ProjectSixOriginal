@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Prosper Loan Categories By State</title>
+        <!-- States Geo  -->
+        <!-- JS  -->
+        <script src="vizJS/d3/d3.js" type="text/javascript"></script>
+        <script src="vizJS/d3/d3-tip.js" type="text/javascript"></script>
+        <script src="vizJS/d3-geomap/vendor/d3.geomap.dependencies.min.js" type="text/javascript"></script>
+        <script src="vizJS/d3-geomap/js/d3.geomapMine.js" type="text/javascript"></script>
+        <script src="vizJS/d3-slider/d3.slider.2007.js" type="text/javascript"></script>
+        <!-- CSS  -->
+        <link href="vizJS/d3/d3-tip.css" rel="stylesheet" type="text/css"/>
+        <link href="vizJS/d3-geomap/css/d3.geomap.css" rel="stylesheet" type="text/css"/>
+        <link href="vizJS/d3-slider/d3.slider.css" rel="stylesheet" type="text/css"/>
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css"/>
+        <link href="http://rawgithub.com/Caged/d3-tip/master/examples/example-styles.css" rel="stylesheet" type="text/css"/>
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="css/video_test.css" rel="stylesheet" type="text/css"/>
+
+        <style type="text/css">
+            #button1 {
+                display: inline-block;
+                margin: 0px 15px 0px 15px;
+                border: solid 2px black;
+                /* border-radius: 10px; */
+                width: 95px;
+                text-align: center;
+                padding: 5px;
+            }
+            #button1:focus {
+                outline: 0;
+            }
+            #main {
+                height: 90vh !important;
+            }
+            #container {
+                height: 90%;
+                max-height: 90%;
+                margin-top: 0;
+            }
+
+            #centerwrapper {
+                margin: auto;
+                width: 90%;
+            }
+
+            body {
+                font-family: Open Sans, Verdana, Arial, sans-serif;
+            }
+
+            .wrapper {
+                width: 50%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .wrapper > div {
+                margin: 15px 0px 25px 0px;
+            }
+
+            #mainWrapper {
+                width: 70%;
+                margin: auto;
+            }
+
+            #intro {
+                margin: 0px 0px 20px 0px;
+            }
+
+            h4, h1 {
+                margin: 0px;
+            }
+
+            #introLine h1, #introLine p {
+                display: inline;
+                vertical-align: baseline;
+            }
+
+            .labels {
+                fill: #444;
+                font-family: arial;
+                font-size: 0.7em;
+            }
+            .buttonShadow {
+                box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+            }
+
+            .buttonShadow:hover {
+                box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+            }
+            path.unit:hover {
+                fill: #666 !important;
+            }
+            tooltip {
+                background-color: red !important;
+                margin: 10px;
+                height: 200px;
+                width: 150px;
+                padding-left: 10px;
+                padding-top: 10px;
+                -webkit-border-radius: 10px;
+                -moz-border-radius: 10px;
+                border-radius: 10px;
+            }
+        </style>
+    </head>
+    <body>
+
+        <div id="main">
+
+            <div id="container">
+
+                <div  id="centerwrapper"  style="text-align:center;">
+                    <div class="buttonShadow" id="button1">
+                        <a onclick="debt();" id="run1"><i class="fa fa-university" aria-hidden="true"></i> Debt</a>
+                    </div>
+                    <div  class="buttonShadow" id="button1">
+                        <a onclick="home();" id="run2"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
+                    </div>
+                    <div  class="buttonShadow" id="button1">
+                        <a onclick="business();" id="run2"><i class="fa fa-money" aria-hidden="true"></i> Business</a>
+                    </div>
+                    <div  class="buttonShadow" id="button1">
+                        <a onclick="auto();" id="run3"><i class="fa fa-car" aria-hidden="true"></i> Auto</a>
+                    </div>
+                    <div  class="buttonShadow" id="button1">
+                        <a onclick="other();" id="run4"><i class="fa fa-question" aria-hidden="true"></i> Other/NA</a>
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <center>
+                        <h2 style="margin:10px 0px 0px 0px">Year: <span id="slider4text">2007</span></h2>
+                    </center>
+                    <div id="slider4"></div>
+                </div>
+                <br />
+                <div class="wrapper">
+                    <center>
+                        <span style="font-size:30px">Category: </span><span id="variableText" style="font-size:30px">Debt</span>
+                        <div class="centerIsh" style="text-align:center;">
+                            <button id='btn' class="buttonShadow" id="button1">
+                                <i class="fa fa-bar-chart" aria-hidden="true"></i>
+                                Dollar Value
+                            </button>
+                            <button id='btn1' class="buttonShadow" id="button1">
+                                <i class="fa fa-bar-chart" aria-hidden="true"></i>
+                                Count
+                            </button>
+                        </div>
+                    </center>
+                </div>
+                <div id="mainWrapper" style="margin-top:15px">
+
+                </div>
+
+                <div id="endstuff" style="margin-top:-5px; text-align:right;">
+                    <p style="font-size:12px;">
+                        Graphic Based On: <a href="https://github.com/CSE512-15S/a3-aljadaan-rlordon-olsufj"><strong>Weather in the USA:</strong>&nbsp;Ross Lordon, Jacob Olsufka, Ahmad Aljadaan</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            var formatter = d3.format("");
+            var tickFormatter = function(d) {
+                return formatter(d);
+            }
+            var col = 'Debt';
+            var sliderValue = 2007;
+            var aa = [2, 2];
+            var cnt = [1];
+            var letter = 'Debt';
+            var altVersion = true;
+
+            var div = d3.select("#mainWrapper");
+            var svg = div.append("svg").attr("id", "map13").attr("height", 500).attr("width", 960);
+            var div = d3.select("svg").append("div").attr("class", "tooltip").style("opacity", 1);
+
+            var debt = function() {
+                letter = 'Debt';
+                col = 'Debt';
+                var localV = valueIs();
+                colorMap13(localV, letter);
+                d3.select('#variableText').text(letterIs())
+            }
+            var home = function() {
+                letter = 'Home';
+                col = 'Home';
+                var localV = valueIs();
+                colorMap13(localV, letter);
+                d3.select('#variableText').text(letterIs())
+            }
+            var business = function() {
+                letter = 'Business';
+                col = 'Business';
+                var localV = valueIs();
+                colorMap13(localV, letter);
+                d3.select('#variableText').text(letterIs())
+            }
+            var auto = function() {
+                letter = 'Auto';
+                col = 'Auto';
+                var localV = valueIs();
+                colorMap13(localV, letter);
+                d3.select('#variableText').text(letterIs())
+            }
+            var other = function() {
+                letter = 'Other/NA';
+                col = 'Other/NA';
+                var localV = valueIs();
+                colorMap13(localV, letter);
+                d3.select('#variableText').text(letterIs())
+            }
+            var axis = d3.svg.axis().orient("bottom").ticks(8).tickFormat(tickFormatter);
+            d3.select('#slider4').call(d3.slider().axis(axis).on("slide", function(evt, value) {
+                var mapLetter = letterIs();
+                d3.select('#slider4text').text(value);
+                colorMap13(value, mapLetter);
+                sliderValue = value;
+                valueIs();
+            }))
+            function valueIs() {
+                console.log(sliderValue);
+                return sliderValue;
+            }
+
+            function letterIs() {
+                console.log('letter is: ' + letter);
+                return letter;
+            }
+
+            function colorMap13(sValue, z) {
+                var map;
+                var day_ = sValue;
+                var colorScheme = z;
+                if (colorScheme === 'Debt') {
+                    map = d3.geomap.choropleth().geofile('vizJS/d3-geomap/topojson/countries/USA.json').colors(colorbrewer.Reds[8]).projection(d3.geo.albersUsa).column(col).unitId('FIPS').scale(1000).legend(true);
+                } else if (colorScheme === 'Home') {
+                    map = d3.geomap.choropleth().geofile('vizJS/d3-geomap/topojson/countries/USA.json').colors(colorbrewer.Oranges[8]).projection(d3.geo.albersUsa).column(col).unitId('FIPS').scale(1000).legend(true);
+                } else if (colorScheme === 'Business') {
+                    map = d3.geomap.choropleth().geofile('vizJS/d3-geomap/topojson/countries/USA.json').colors(colorbrewer.Greens[8]).projection(d3.geo.albersUsa).column(col).unitId('FIPS').scale(1000).legend(true);
+                } else if (colorScheme === 'Auto') {
+                    map = d3.geomap.choropleth().geofile('vizJS/d3-geomap/topojson/countries/USA.json').colors(colorbrewer.Blues[8]).projection(d3.geo.albersUsa).column(col).unitId('FIPS').scale(1000).legend(true);
+                } else if (colorScheme === 'Other/NA') {
+                    map = d3.geomap.choropleth().geofile('vizJS/d3-geomap/topojson/countries/USA.json').colors(colorbrewer.Purples[8]).projection(d3.geo.albersUsa).column(col).unitId('FIPS').scale(1000).legend(true);
+                }
+                if (altVersion) {
+                    d3.csv('data/ListingCategory2007.csv', function(error, data) {
+                        var newD = [];
+                        var dataArray = [];
+                        for (var i = 2007; i < 2015; i++) {
+                            var newD = [];
+                            for (var prop in data) {
+                                if (data[prop].Year === i.toString()) {
+                                    console.log(data[prop]);
+                                    newD.push(data[prop]);
+                                }
+                            }
+                            dataArray[i] = newD;
+                            console.log(newD);
+                        };
+
+                        d3.select("#map13").datum(dataArray[day_]).call(map.draw, map);
+
+                    });
+                } else {
+                    d3.csv('data/ListingTotalCategory2007.csv', function(error, data) {
+                        var newD = [];
+                        var dataArray = [];
+                        for (var i = 2007; i < 2015; i++) {
+                            var newD = [];
+                            for (var prop in data) {
+                                if (data[prop].Year === i.toString()) {
+                                    console.log(data[prop]);
+                                    newD.push(data[prop]);
+                                }
+                            }
+                            dataArray[i] = newD;
+                            console.log(newD);
+                        };
+
+                        d3.select("#map13").datum(dataArray[day_]).call(map.draw, map);
+
+                    });
+                }
+            }
+
+            function colorMapStart() {
+                var map;
+                if (altVersion) {
+                    map = d3.geomap.choropleth().geofile('vizJS/d3-geomap/topojson/countries/USA.json').colors(colorbrewer.Reds[8]).projection(d3.geo.albersUsa).column(col).unitId('FIPS').scale(1000).legend(true);
+
+                    d3.csv('data/ListingCategory2007.csv', function(error, data) {
+                        var newD = [];
+                        var dataArray = [];
+                        for (var i = 2007; i < 2015; i++) {
+                            var newD = [];
+                            for (var prop in data) {
+                                if (data[prop].Year === i.toString()) {
+                                    newD.push(data[prop]);
+                                }
+                            }
+                            dataArray[i] = newD;
+                        };
+                        console.log(dataArray);
+                        console.log(dataArray[2007]);
+
+                        d3.select("#map13").datum(dataArray[2007]).call(map.draw, map);
+                    });
+                } else {
+                    map = d3.geomap.choropleth().geofile('vizJS/d3-geomap/topojson/countries/USA.json').colors(colorbrewer.Reds[8]).projection(d3.geo.albersUsa).column(col).unitId('FIPS').scale(1000).legend(true);
+                    d3.csv('data/ListingTotalCategory2007.csv', function(error, data) {
+                        var newD = [];
+                        var dataArray = [];
+                        for (var i = 2007; i < 2015; i++) {
+                            var newD = [];
+                            for (var prop in data) {
+                                if (data[prop].Year === i.toString()) {
+                                    newD.push(data[prop]);
+                                }
+                            }
+                            dataArray[i] = newD;
+                        };
+                        console.log(dataArray);
+                        console.log(dataArray[2007]);
+
+                        d3.select("#map13").datum(dataArray[2007]).call(map.draw, map);
+                    });
+                }
+
+            }
+
+
+            d3.select("#btn").on("click", function() {
+                altVersion = false;
+            });
+            d3.select("#btn1").on("click", function() {
+                altVersion = true;
+            });
+            colorMapStart();
+        </script>
+
+    </body>
+</html>

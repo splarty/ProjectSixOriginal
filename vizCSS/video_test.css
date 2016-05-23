@@ -1,0 +1,258 @@
+@import url(http://fonts.googleapis.com/css?family=Jacques+Francois);
+@import url(http://fonts.googleapis.com/css?family=Quattrocento+Sans);
+@import url(http://fonts.googleapis.com/css?family=PT+Mono);
+
+body {
+    /* background: transparent;*/
+    margin: 0;
+    font-family: 'Jacques Francois', serif;
+    overflow: hidden;
+}
+/*
+ @media screen and (max-width: 500px) {
+ div {
+ width: 70%;
+ }
+ }
+ @media screen and (max-device-width: 800px) {
+ #bgvid {
+ display: none;
+ }
+ }
+ */
+/*
+ .header {
+ background: transparent;
+ }*/
+
+/* ------------------------------------------------------------ *\
+ |* ------------------------------------------------------------ *|
+ |* footer - to hide watermarks if needed
+ |* ------------------------------------------------------------ *|
+ \* ------------------------------------------------------------ */
+
+#myFooter {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    width: 140%;
+    line-height: 3;
+    text-align: center;
+    color: black;
+    font-size: 12px;
+    font-family: sans-serif;
+    z-index: 20;
+    /* rgb for "GoldenRod" with an opacity measure */
+    /*
+     background-color: rgba(173,217,228,0.0);
+     text-shadow: 0 1px 0 #DAA520;
+     box-shadow: 0 0 15px #FF8E25;
+     */
+}
+
+#myFooter #footerButton {
+    position: relative;
+    float: left;
+    margin: 5px 75px 0px -75px; /* negative to move play and mute icons up */
+}
+
+#myFooter #footerCopy {
+
+    float: right;
+    margin: 0px 0px 0px 0px;
+}
+
+/* ------------------------------------------------------------ *\
+ |* ------------------------------------------------------------ *|
+ |* sliding Side Bar
+ |* ------------------------------------------------------------ *|
+ \* ------------------------------------------------------------ */
+
+#outerMenu {
+    background: transparent;
+    -webkit-transition: all 5s !important;
+    -moz-transition: all 5s !important;
+    -o-transition: all 5s !important;
+    transition: all 5s !important;
+    position: fixed;
+    font-size: 10px;
+    top: 65%;
+    width: 100%;
+    z-index: 1; /* The z-index should be higher than Google Maps */
+    padding 5px;
+}
+.menuout {
+    position: relative;
+    left: -2%;padding 5px;
+    top: 0;
+    width: 150%; /* Change to 100% if, on hover, menuout does not move */
+    font-size: 20px !important;
+    text-align: left;
+    color: #A9A9A9;
+    /* background-color: rgba(173,217,228,0.1);  rgb for "GoldenRod" with an opacity measure */
+    z-index: 2;
+    -webkit-border-radius: 5px 0 0 5px;
+    -moz-border-radius: 5px 0 0 5px;
+    border-radius: 5px 0 0 5px;
+    background: -webkit-linear-gradient(right, rgba(173,217,228,0.2), rgba(173,217,228,0)); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(right, rgba(173,217,228,0.2), rgba(173,217,228,0)); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(right, rgba(173,217,228,0.2), rgba(173,217,228,0)); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to right, rgba(173,217,228,0.2), rgba(173,217,228,0)); /* Standard syntax (must be last) */
+    -webkit-box-shadow: 5px 5px 3px rgba(0,0,0,0.2);
+    -moz-box-shadow: 5px 5px 3px rgba(0,0,0,0.2);
+    box-shadow: 5px 5px 3px rgba(0,0,0,0.2);
+}
+/*
+ .menuout #menuout0 {
+ top: 65%;
+ }
+ */
+.menuout:hover {
+    right: 0%; /* Change to 0 for none-sliding, Change to 50% for sliding off page */
+    background-color: rgba(173,217,228,0.9); /* rgb for "GoldenRod" with an opacity measure */
+    background: linear-gradient(to bottom right, #add9e4, rgba(0,0,0,0));
+    -webkit-transition: all 15s ease !important;
+    -moz-transition: all 15s ease !important;
+    -o-transition: all 15s ease !important;
+    transition: all 15s ease !important;
+}
+
+/* Menu Slide In Area */
+.menuout_inner {
+    position: fixed; /* The overlays the inner menu over the page */
+    display: block;
+    top: 0%;
+    right: -140%; /* default is for the page to be off-screen */
+    color: black;
+    width: 120%;
+    height: 100%;
+    z-index: 3;
+    text-align: left;
+    -webkit-border-radius: 10px 0 0 10px; /* rounded corners */
+    -moz-border-radius: 10px 0 0 10px;
+    border-radius: 10px 0 0 10px;
+    -moz-box-shadow: 5px 5px 3px rgba(0,0,0,0.5);
+    box-shadow: 5px 5px 3px rgba(0,0,0,0.5);
+    background: -webkit-linear-gradient(to bottom right, rgba(173,217,228,1), rgba(173,217,228,0.9)); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(to bottom right, rgba(173,217,228,1), rgba(173,217,228,0.9)); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(to bottom right, rgba(173,217,228,1), rgba(173,217,228,0.9)); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to bottom right, rgba(173,217,228,1), rgba(173,217,228,0.9)); /* Standard syntax (must be last) */
+}
+
+.menuout_inner:hover {
+    /*
+     position: fixed; *//* move from off screen -51% to on screen 0 */
+
+    margin-right: 0;
+}
+
+/************************************/
+/* This is where the action happens */
+.menuout .menuout_inner {
+    right: -140%; /* default is for the page to be off-screen */
+    -webkit-transition: right 0.5s ease !important;
+    -moz-transition: right 0.5s ease !important;
+    -o-transition: right 0.5s ease !important;
+    transition: right 0.5s ease !important;
+}
+
+.menuout:hover .menuout_inner {
+    right: -30%;/* move from off screen -51% to on screen 0 */
+}
+/************************************/
+
+.menuout_inner a {
+    color: white;
+    -webkit-transition: 0.5s linear 0.3s;
+    -moz-transition: 0.5s linear 0.3s;
+    -o-transition: 0.5s linear 0.3s;
+    transition: 0.5s linear 0.3s;
+}
+.menuout_inner a:hover {
+    color: #fff;
+    text-shadow: -1px 1px 8px #ffc, 1px -1px 8px #fff; /* Glowing effect */
+}
+
+/* ------------------------------------------------------------ *\
+ |* ------------------------------------------------------------ *|
+ |*  Text
+ |* ------------------------------------------------------------ *|
+ \* ------------------------------------------------------------ */
+
+.menuout_inner_text {
+    margin: 0 15% 0 1% !important;
+}
+/* Text in Outer Menu */
+p .myText {
+    padding: 0, 0, 0, 0 !important;
+}
+
+/* Text in Inner Menu */
+p.innerText {
+    font-family: 'Quattrocento Sans', sans-serif !important;
+    line-height: 1.1em !important;
+    font-size: 14px !important;
+    text-align: justify;
+}
+
+/* ------------------------------------------------------------ *\
+ |* ------------------------------------------------------------ *|
+ |*  Generals
+ |* ------------------------------------------------------------ *|
+ \* ------------------------------------------------------------ */
+
+.centerIsh {
+    margin: 0 auto !important;
+    width: 50% !important;
+}
+
+.prosper {
+    margin: 0 auto !important;
+    width: 55% !important;
+}
+
+.icon {
+    /* don't change width and height in order to change the size of the icon,
+     you can control the size with font-size for different class(es) - below */
+    line-height: 100%;
+    width: 1em;
+    height: 1em;
+    position: relative;
+    display: block;
+    float: left;
+}
+/* Button like icons */
+.icon-square, .icon-rounded {
+    border: .75em solid rgb(242, 242, 242); /* #f2f2f2 */
+    background-color: rgb(242, 242, 242); /* #f2f2f2 */
+    margin: 0 .5em .5em 0;
+    /* for browsers that supports */
+    -webkit-box-shadow: 0 0 0 .0625em rgb(226, 226, 226); /* #e2e2e2 */
+    -moz-box-shadow: 0 0 0 .0625em rgb(226, 226, 226); /* #e2e2e2 */
+    box-shadow: 0 0 0 .0625em rgb(226, 226, 226); /* #e2e2e2 */
+}
+.icon-rounded {
+    border-radius: 1.5em;
+}
+/*
+ * Sizes
+ *
+ * 5 preset sizes, simply change the font-size or add your custom class.
+ *
+ */
+.icon-small {
+    font-size: 1em;
+}
+.icon-mid {
+    font-size: 2em;
+}
+.icon-large {
+    font-size: 4em;
+}
+.icon-extra-large {
+    font-size: 8em;
+}
+.icon-huge {
+    font-size: 12em;
+}
+
